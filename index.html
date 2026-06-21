@@ -312,14 +312,23 @@
       line-height: 1.55;
     }
 
-    .home-brand .home-cta {
-      margin: 1.35rem 0 0;
+    .home-pick {
+      text-align: center;
+      padding: 1rem 2rem 1.25rem;
+    }
+
+    .home-cta {
+      margin: 0;
       font-family: Oswald, sans-serif;
       font-size: 0.78rem;
       font-weight: 500;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       color: var(--brass);
+    }
+
+    .home-pick .home-cta {
+      margin: 0;
     }
 
     .home-fathers {
@@ -830,14 +839,22 @@
         display: none;
       }
 
-      body.view-home .wall {
-        flex: 0 1 auto;
-        max-height: 58vh;
+      body.view-home {
         overflow-y: auto;
+        overflow-x: hidden;
+        height: auto;
+        min-height: 100dvh;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      body.view-home .wall {
+        flex: 0 0 auto;
+        max-height: none;
+        overflow: visible;
       }
 
       body.view-home .hall {
-        flex: 1;
+        flex: 0 0 auto;
         min-height: 0;
         max-height: none;
       }
@@ -846,27 +863,62 @@
         display: none;
       }
 
-      body.view-home .home {
-        flex: none;
-        overflow-y: visible;
+      body.view-home .hall-brand,
+      body.view-home .tartan {
+        display: none;
       }
 
-      .home-heroes {
-        grid-template-columns: repeat(3, 1fr);
+      body.view-home .home {
+        display: block;
+        overflow: visible;
+        flex: none;
+      }
+
+      body.view-home .home-heroes {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
         height: auto;
         min-height: 0;
-        gap: 0.4rem;
-        padding: 0.65rem 0.75rem 0.35rem;
+        padding: 0.5rem 0.75rem 0;
       }
 
-      .home-hero {
-        height: 88px;
-        min-height: 0;
+      body.view-home .home-hero {
+        width: 100%;
+        height: 128px;
+        min-height: 128px;
+        max-height: 128px;
+        flex-shrink: 0;
         border-width: 2px;
       }
 
-      .home-hero.badge img {
-        padding: 0.2rem;
+      body.view-home .home-hero.badge img {
+        padding: 0.25rem;
+      }
+
+      body.view-home .home-brand {
+        padding: 0.85rem 1rem 0.5rem;
+      }
+
+      body.view-home .home-fathers {
+        margin-top: 0;
+        padding: 0.5rem 1rem 0.75rem;
+        border-top: 1px solid rgba(166, 124, 61, 0.25);
+        background: none;
+      }
+
+      body.view-home .home-fathers::before {
+        display: none;
+      }
+
+      body.view-home .home-fathers h2 {
+        font-size: 1.35rem;
+      }
+
+      body.view-home .home-pick {
+        padding: 0.75rem 1rem 0.85rem;
+        background: var(--stone-warm);
+        border-bottom: 4px solid var(--brass);
       }
 
       .home-brand {
@@ -1084,12 +1136,14 @@
         <h1>Clan Scarlett</h1>
         <p class="home-sub">The Piper's Wall</p>
         <p class="home-motto">For the love of the music. The great Highland pipes.</p>
-        <p class="home-cta">Pick a tune from the list</p>
       </div>
       <div class="home-fathers">
         <h2>Happy Father's Day</h2>
         <p>For Adam</p>
         <span class="home-fathers-year">Father's Day 2026</span>
+      </div>
+      <div class="home-pick">
+        <p class="home-cta">Pick a tune from the list</p>
       </div>
     </div>
 
