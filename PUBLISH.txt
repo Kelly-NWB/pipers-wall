@@ -1,0 +1,27 @@
+pipers-wall — quick publish (GitHub Pages)
+
+WHAT GOES LIVE
+  index.html
+  clan-hero.jpg
+  highland-cow.jpg
+  Finalhighlander.png
+  boise-highlanders-logo.png
+  cadence-images/
+  .nojekyll
+
+WHAT STAYS LOCAL (.gitignore)
+  node_modules/
+  verify-layout.mjs
+  unused images and dev files
+
+GITHUB STEPS (first time)
+  1. Create repo: Kelly-NWB/pipers-wall (public)
+  2. In this folder:
+       git init
+       git add index.html clan-hero.jpg highland-cow.jpg Finalhighlander.png boise-highlanders-logo.png cadence-images .nojekyll .gitignore PUBLISH.txt
+       git commit -m "Clan Scarlett Piper's Wall"
+       git branch -M main
+       git remote add origin https://github.com/Kelly-NWB/pipers-wall.git
+       git push -u origin main
+  3. GitHub: Settings → Pages → Deploy from branch → main → / (root) → Save
+  4. Live URL: https://kelly-nwb.github.io/pipers-wall/

@@ -1,0 +1,15 @@
+node_modules/
+package-lock.json
+package.json
+terminals/
+verify-layout.mjs
+verify-*.mjs
+
+# Unused / dev images (not referenced in index.html)
+Finalhighlander.jpg
+boise-highlanders-crest.jpg
+boise-highlanders.png
+boise highlanders orig.png
+download.jpg
+groknobg.png
+grok-image-*

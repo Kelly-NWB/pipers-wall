@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clan Scarlett | The Piper's Wall</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --scarlett: #9b1c1c;
+      --scarlett-deep: #6b1515;
+      --scarlett-glow: #b82a2a;
+      --heather: #3d5c4a;
+      --heather-mid: #4d6e58;
+      --heather-dark: #2d4538;
+      --heather-light: #8aab92;
+      --stone: #c8c0b4;
+      --stone-warm: #ddd6c8;
+      --oak-bar: #f5f0e6;
+      --parchment: #f4ecdc;
+      --parchment-aged: #e8dcc8;
+      --parchment-shadow: #c4b498;
+      --brass: #a67c3d;
+      --brass-light: #c9a04a;
+      --ink: #2a2218;
+      --mist: #7a6f62;
+      --snare-sheet: #faf8f4;
+      --snare-ink: #2a2218;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: var(--stone-warm);
+      color: var(--ink);
+      font-family: "Libre Baskerville", Georgia, serif;
+    }
+
+    body {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    body.view-home .play-view { display: none !important; }
+    body.view-play .home { display: none !important; }
+
+    /* ── Sidebar ── */
+    .hall {
+      display: flex;
+      flex-direction: column;
+      background:
+        linear-gradient(180deg, var(--heather-mid) 0%, var(--heather-dark) 100%);
+      border-right: 4px solid var(--brass);
+      box-shadow: inset -4px 0 16px rgba(0, 0, 0, 0.12);
+      color: var(--parchment);
+      overflow: hidden;
+    }
+
+    .tartan {
+      height: 18px;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--heather-dark) 0 12px,
+        var(--scarlett-deep) 12px 24px,
+        var(--scarlett) 24px 36px,
+        #1a3028 36px 48px,
+        var(--scarlett-glow) 48px 52px,
+        var(--heather-dark) 52px 64px
+      );
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .hall-brand {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.75rem 1rem;
+      border-bottom: 2px solid rgba(166, 124, 61, 0.35);
+      background: rgba(0, 0, 0, 0.12);
+    }
+
+    .hall-mark {
+      flex-shrink: 0;
+      width: 2.35rem;
+      height: 2.35rem;
+      border: 2px solid var(--brass);
+      border-radius: 50%;
+      background: linear-gradient(145deg, var(--scarlett-glow), var(--scarlett-deep));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Cinzel, serif;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: #fff8e8;
+    }
+
+    .hall-brand-text {
+      min-width: 0;
+    }
+
+    .hall-brand-text strong {
+      display: block;
+      font-family: Cinzel, serif;
+      font-size: 1rem;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #f0e4cc;
+      line-height: 1.15;
+    }
+
+    .hall-brand-text span {
+      display: block;
+      margin-top: 0.15rem;
+      font-family: Oswald, sans-serif;
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--brass-light);
+    }
+
+    .tune-heading {
+      padding: 0.85rem 1rem 0.35rem;
+      font-family: Oswald, sans-serif;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brass-light);
+    }
+
+    #tune-sections {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+    }
+
+    .tunes {
+      list-style: none;
+      margin: 0;
+      padding: 0 0.65rem 0.5rem;
+    }
+
+    .tunes button {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.2rem;
+      padding: 0.6rem 0.85rem;
+      border: none;
+      border-left: 4px solid transparent;
+      border-radius: 0 2px 2px 0;
+      background: transparent;
+      color: #e8dfd0;
+      font-family: "Libre Baskerville", Georgia, serif;
+      font-size: 1rem;
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .tunes button small {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--mist);
+      margin-top: 0.1rem;
+    }
+
+    .tunes button:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-left-color: var(--brass);
+    }
+
+    .tunes button.active {
+      background: linear-gradient(90deg, rgba(155, 28, 28, 0.55), rgba(155, 28, 28, 0.15));
+      border-left-color: var(--scarlett-glow);
+      color: #fff;
+    }
+
+    .hall-foot {
+      flex-shrink: 0;
+      padding: 0.75rem 1rem;
+      border-top: 2px solid rgba(166, 124, 61, 0.35);
+      font-size: 0.78rem;
+      color: #d8cdb8;
+      line-height: 1.5;
+      text-align: center;
+      background: rgba(45, 69, 56, 0.35);
+    }
+
+    .hall-foot strong {
+      display: block;
+      font-family: Oswald, sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--brass-light);
+      margin-bottom: 0.35rem;
+    }
+
+    .hall-foot em {
+      color: #d4c4a8;
+      font-style: italic;
+    }
+
+    /* ── Main wall ── */
+    .wall {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      min-height: 0;
+      background: var(--stone-warm);
+      overflow: hidden;
+    }
+
+    .play-view {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .home {
+      flex: 1;
+      min-height: 0;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      background: var(--stone-warm);
+    }
+
+    .home-heroes {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.75rem;
+      padding: 1rem 1.25rem;
+      height: min(46vh, 440px);
+      min-height: 300px;
+    }
+
+    .home-hero {
+      margin: 0;
+      height: 100%;
+      border: 3px solid var(--brass);
+      box-shadow: 0 6px 20px rgba(42, 34, 24, 0.14);
+      overflow: hidden;
+      background: #141210;
+    }
+
+    .home-hero img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .home-hero.pipes img {
+      object-position: 28% 68%;
+    }
+
+    .home-hero.badge img {
+      object-fit: contain;
+      object-position: center;
+      padding: 0.65rem;
+      background: #0a0a0a;
+    }
+
+    .home-hero.cow img {
+      object-position: center 40%;
+    }
+
+    .home-brand {
+      text-align: center;
+      padding: 1.25rem 2rem 2rem;
+    }
+
+    .home-brand h1 {
+      margin: 0;
+      font-family: Cinzel, serif;
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 900;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--scarlett-deep);
+    }
+
+    .home-brand .home-sub {
+      margin: 0.45rem 0 0;
+      font-family: Oswald, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--heather-dark);
+    }
+
+    .home-brand .home-motto {
+      margin: 1rem auto 0;
+      max-width: 26rem;
+      font-size: 1.05rem;
+      font-style: italic;
+      color: #5c5348;
+      line-height: 1.55;
+    }
+
+    .home-brand .home-cta {
+      margin: 1.35rem 0 0;
+      font-family: Oswald, sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--brass);
+    }
+
+    .home-fathers {
+      margin-top: auto;
+      padding: 2rem 1.5rem 2.5rem;
+      text-align: center;
+      background:
+        linear-gradient(180deg, transparent 0%, rgba(155, 28, 28, 0.06) 40%, rgba(155, 28, 28, 0.12) 100%);
+      border-top: 3px solid var(--brass);
+    }
+
+    .home-fathers::before {
+      content: "";
+      display: block;
+      height: 10px;
+      margin: 0 auto 1.25rem;
+      max-width: 12rem;
+      background: repeating-linear-gradient(
+        90deg,
+        var(--heather-dark) 0 10px,
+        var(--scarlett-deep) 10px 20px,
+        var(--scarlett) 20px 30px,
+        var(--heather-dark) 30px 40px
+      );
+    }
+
+    .home-fathers h2 {
+      margin: 0;
+      font-family: Cinzel, serif;
+      font-size: clamp(2.25rem, 5.5vw, 4rem);
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--scarlett);
+      line-height: 1.05;
+      text-shadow: 0 2px 0 rgba(255, 255, 255, 0.35);
+    }
+
+    .home-fathers p {
+      margin: 0.65rem 0 0;
+      font-family: "Libre Baskerville", Georgia, serif;
+      font-size: clamp(1.1rem, 2.2vw, 1.45rem);
+      font-style: italic;
+      color: var(--heather-dark);
+    }
+
+    .home-fathers .home-fathers-year {
+      display: block;
+      margin-top: 0.85rem;
+      font-family: Oswald, sans-serif;
+      font-size: 0.72rem;
+      font-style: normal;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--brass);
+    }
+
+    .btn-home {
+      flex-shrink: 0;
+      padding: 0.45rem 0.75rem;
+      border: 1px solid var(--parchment-shadow);
+      border-radius: 2px;
+      background: #fff;
+      color: var(--heather-dark);
+      font-family: Oswald, sans-serif;
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+
+    .btn-home:hover {
+      background: var(--parchment-aged);
+      border-color: var(--brass);
+      color: var(--scarlett-deep);
+    }
+
+    .wall-bar {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 1.25rem;
+      background: var(--oak-bar);
+      border-bottom: 2px solid var(--parchment-shadow);
+      box-shadow: 0 2px 10px rgba(42, 34, 24, 0.08);
+      flex-shrink: 0;
+      transition: border-color 0.25s;
+    }
+
+    body.mode-snare .wall-bar {
+      border-bottom-color: rgba(155, 28, 28, 0.35);
+    }
+
+    body.mode-voice .wall-bar {
+      border-bottom-color: rgba(166, 124, 61, 0.45);
+    }
+
+    .wall-bar h2 {
+      flex: 1;
+      margin: 0;
+      font-family: Cinzel, serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .part-tag {
+      display: none;
+      margin-left: 0.5rem;
+      padding: 0.15rem 0.55rem;
+      border: 1px solid rgba(155, 28, 28, 0.45);
+      border-radius: 2px;
+      background: rgba(155, 28, 28, 0.08);
+      font-family: Oswald, sans-serif;
+      font-size: 0.62rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--scarlett-deep);
+      vertical-align: middle;
+    }
+
+    body.mode-snare .part-tag,
+    body.mode-voice .part-tag { display: inline; }
+
+    .zoom {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .zoom button {
+      width: 2.1rem;
+      height: 2.1rem;
+      border: 1px solid var(--parchment-shadow);
+      border-radius: 2px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 1.1rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .zoom button:hover { background: var(--parchment-aged); }
+
+    .zoom span {
+      min-width: 3rem;
+      text-align: center;
+      font-family: Oswald, sans-serif;
+      font-size: 0.75rem;
+      color: var(--mist);
+    }
+
+    .parts {
+      display: none;
+      gap: 0;
+      padding: 3px;
+      border: 2px solid var(--parchment-shadow);
+      border-radius: 2px;
+      background: #fff;
+    }
+
+    .parts.visible { display: flex; }
+
+    .parts button {
+      padding: 0.4rem 0.75rem;
+      border: none;
+      border-radius: 1px;
+      background: transparent;
+      color: var(--mist);
+      font-family: Oswald, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .parts button:hover { color: var(--ink); }
+
+    .parts button[data-part="pipes"].active {
+      background: var(--heather-dark);
+      color: #f5e6c8;
+    }
+
+    .parts button[data-part="snare"].active {
+      background: var(--scarlett);
+      color: #fff;
+      box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.15);
+    }
+
+    .parts button[data-part="voice"].active {
+      background: var(--brass);
+      color: #fff;
+      box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.12);
+    }
+
+    .parts button.hidden { display: none; }
+
+    .cadence-wrap {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.2rem;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+    }
+
+    .cadence-wrap .cadence-score {
+      background: #fff;
+      padding: 0.15rem 0.35rem;
+      border: 1px solid #eceae6;
+      width: 100%;
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 0;
+    }
+
+    .cadence-wrap .cadence-score img {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      max-height: 100%;
+      height: auto;
+      margin: 0 auto;
+    }
+
+    .cadence-wrap .cadence-foot {
+      margin: 0;
+      font-family: Oswald, sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mist);
+      line-height: 1.2;
+    }
+
+    .cadence-brand {
+      margin: 0;
+      padding-top: 0.2rem;
+      border-top: 1px solid #e8e4dc;
+      width: 100%;
+      flex-shrink: 0;
+    }
+
+    .cadence-brand img {
+      display: block;
+      width: auto;
+      max-width: min(240px, 42vw);
+      max-height: min(22vh, 200px);
+      height: auto;
+      margin: 0 auto;
+      object-fit: contain;
+    }
+
+    body.mode-snare .fit-inner {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+
+    body.mode-snare .cadence-wrap {
+      flex: 1;
+      min-height: 0;
+    }
+
+    body.mode-snare .cadence-foot {
+      flex-shrink: 0;
+    }
+
+    .scroll {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      padding: 0.35rem 0.5rem;
+      background: var(--stone-warm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* The sheet, like paper on the wall */
+    .sheet {
+      width: 100%;
+      max-width: 1000px;
+      margin: 0 auto;
+      flex: 1;
+      min-height: 0;
+      max-height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 0.4rem 0.6rem;
+      position: relative;
+      transition: background 0.35s, box-shadow 0.35s, border-color 0.35s;
+    }
+
+    #score {
+      flex: 1;
+      min-height: 0;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    body.mode-snare #score {
+      align-items: stretch;
+    }
+
+    .fit-inner {
+      width: 100%;
+      transform-origin: top center;
+      will-change: transform;
+    }
+
+    .sheet-pipes {
+      background:
+        linear-gradient(135deg, var(--parchment) 0%, var(--parchment-aged) 100%);
+      box-shadow:
+        0 1px 0 rgba(255, 255, 255, 0.4) inset,
+        0 12px 32px rgba(42, 34, 24, 0.18),
+        0 4px 10px rgba(42, 34, 24, 0.1);
+      border: 1px solid var(--parchment-shadow);
+    }
+
+    .sheet-pipes::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(74, 8, 8, 0.18);
+      pointer-events: none;
+    }
+
+    .sheet-pipes::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 28px,
+        rgba(120, 90, 50, 0.03) 28px,
+        rgba(120, 90, 50, 0.03) 29px
+      );
+      pointer-events: none;
+    }
+
+    .sheet-snare {
+      background: var(--snare-sheet);
+      box-shadow:
+        0 2px 8px rgba(42, 34, 24, 0.08),
+        0 12px 28px rgba(42, 34, 24, 0.1);
+      border: 1px solid #e4e0d8;
+      border-top: 4px solid var(--scarlett);
+      padding: 0.35rem 0.5rem;
+    }
+
+    .sheet.sheet-snare {
+      padding: 0.35rem 0.5rem;
+    }
+
+    .sheet.sheet-snare::before { display: none; }
+
+    .sheet.sheet-snare .sheet-pin { display: none; }
+
+    .sheet-voice {
+      background: linear-gradient(135deg, #faf6ee 0%, #f0e8d8 100%);
+      box-shadow:
+        0 2px 8px rgba(42, 34, 24, 0.08),
+        0 12px 28px rgba(42, 34, 24, 0.1);
+      border: 1px solid #e0d8c8;
+      border-top: 4px solid var(--brass);
+      padding: 0.35rem 0.5rem;
+    }
+
+    .sheet.sheet-voice {
+      padding: 0.35rem 0.5rem;
+    }
+
+    .sheet.sheet-voice::before,
+    .sheet.sheet-voice .sheet-pin { display: none; }
+
+    .lyrics-wrap {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      padding: 0.25rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .lyrics-section {
+      margin: 0;
+    }
+
+    .lyrics-label {
+      margin: 0 0 0.35rem;
+      font-family: Oswald, sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--mist);
+    }
+
+    .lyrics-line {
+      margin: 0;
+      font-size: 1.65rem;
+      line-height: 1.32;
+      color: var(--ink);
+    }
+
+    .lyrics-chorus .lyrics-label {
+      color: var(--brass);
+      font-size: 0.82rem;
+    }
+
+    .lyrics-chorus .lyrics-line {
+      font-weight: 700;
+      font-size: 1.85rem;
+      color: var(--scarlett-deep);
+    }
+
+    body.mode-voice #score {
+      align-items: stretch;
+    }
+
+    .sheet-pin {
+      position: absolute;
+      top: 16px;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 30%, #bbb, #555 55%, #222);
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    .sheet-pin.left { left: 30px; }
+    .sheet-pin.right { right: 30px; }
+
+    .fit-inner svg {
+      display: block;
+      margin: 0 auto;
+    }
+
+    .welcome {
+      text-align: center;
+      padding: 4rem 2rem;
+      color: #5c4a38;
+    }
+
+    .welcome h3 {
+      font-family: Cinzel, serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--scarlett-deep);
+      margin: 0 0 0.75rem;
+      letter-spacing: 0.04em;
+    }
+
+    .welcome p {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.65;
+      max-width: 28rem;
+      margin-inline: auto;
+    }
+
+    @media (max-width: 800px) {
+      body { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+      .hall { max-height: 38vh; }
+      .home-heroes {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: 0;
+        gap: 0.5rem;
+      }
+      .home-hero {
+        height: 200px;
+        min-height: 200px;
+      }
+      .scroll { padding: 0.5rem 0.75rem; }
+      .sheet { padding: 1rem 1rem 1.5rem; }
+    }
+  </style>
+</head>
+<body class="view-home mode-pipes">
+
+  <aside class="hall">
+    <div class="tartan"></div>
+
+    <div class="hall-brand">
+      <div class="hall-mark" aria-hidden="true">S</div>
+      <div class="hall-brand-text">
+        <strong>Clan Scarlett</strong>
+        <span>The Piper's Wall</span>
+      </div>
+    </div>
+
+    <div id="tune-sections"></div>
+
+    <div class="hall-foot">
+      <strong>For Adam, Father's Day 2026</strong>
+      <em>Slàinte</em> to the Boise Highlanders.<br>
+      One tune. One page. Play on.
+    </div>
+  </aside>
+
+  <main class="wall">
+    <div class="home" id="home-view">
+      <div class="home-heroes">
+        <figure class="home-hero pipes">
+          <img src="clan-hero.jpg" alt="Bagpipes and Scottish thistles">
+        </figure>
+        <figure class="home-hero badge">
+          <img src="Finalhighlander.png" alt="Boise Highlanders">
+        </figure>
+        <figure class="home-hero cow">
+          <img src="highland-cow.jpg" alt="Highland cow in the Scottish hills">
+        </figure>
+      </div>
+      <div class="home-brand">
+        <h1>Clan Scarlett</h1>
+        <p class="home-sub">The Piper's Wall</p>
+        <p class="home-motto">For the love of the music. The great Highland pipes.</p>
+        <p class="home-cta">Pick a tune from the list</p>
+      </div>
+      <div class="home-fathers">
+        <h2>Happy Father's Day</h2>
+        <p>For Adam</p>
+        <span class="home-fathers-year">Father's Day 2026</span>
+      </div>
+    </div>
+
+    <div class="play-view" id="play-view">
+      <div class="wall-bar">
+        <button type="button" class="btn-home" id="btn-home" title="Back to home">← Home</button>
+        <h2 id="tune-title"><span id="tune-name">Choose a tune</span><span class="part-tag" id="part-tag"></span></h2>
+        <div class="parts" id="parts">
+          <button type="button" data-part="pipes" class="active">Pipes</button>
+          <button type="button" data-part="snare" id="part-snare">Snare</button>
+          <button type="button" data-part="voice" id="part-voice">Voice</button>
+        </div>
+        <div class="zoom">
+          <button type="button" id="zoom-out" title="Smaller">−</button>
+          <span id="zoom-pct">100%</span>
+          <button type="button" id="zoom-in" title="Bigger">+</button>
+        </div>
+      </div>
+
+      <div class="scroll">
+        <div class="sheet sheet-pipes" id="sheet">
+          <div class="sheet-pin left"></div>
+          <div class="sheet-pin right"></div>
+          <div id="score">
+            <div class="fit-inner" id="fit-inner"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/abcjs@6.4.4/dist/abcjs-basic-min.js"></script>
+  <script>
+    const TUNES = [
+      {
+        id: 'scotland-the-brave',
+        category: 'classic',
+        title: 'Scotland the Brave',
+        type: 'March',
+        cadence: '4-4',
+        abc: `X:1
+T:Scotland The Brave
+C:Trad.
+P:March
+L:1/8
+M:4/4
+K:Hp
+e |
+{g}A2 {GdGe}A>B {gcd}c{e}A {gcd}ce |
+{ag}a2{g}a2 {GdG}ae {gcd}c{e}A |
+{Gdc}d2 {g}f>d {gcd}ce {gcd}c{e}A |
+{GdG}B2{gef}e2{A}e>f {g}e/>d/{g}c/>B/ |
+{g}A2 {GdGe}A>B {gcd}c{e}A {gcd}ce |
+{ag}a2{g}a2 {GdG}ae {gcd}c{e}A |
+{Gdc}d2 {g}f>d {gcd}ce {gcd}c{e}A |
+{GdG}B2{g}A>B {G}A2 {gcd}ce ||
+|| {ag}a2 {g}a2 {GdG}ae {gcd}c{e}A|
+{ag}a2 {g}a2 {GdG}ae {gcd}ce |
+{ag}a2 {g}a>g {a}f2{ag}a>g |
+{a}fa {f}gf {gef}ed {gcd}cB |
+{g}A2 {GdGe}A>B {gcd}c{e}A {gcd}ce |
+{ag}a2 {g}a2 {GdG}ae {gcd}c{e}A |
+{Gdc}d2 {g}f>d {gcd}ce {gcd}c{e}A |
+{CdC}B2 {g}A>B {G}A3||`
+      },
+      {
+        id: 'amazing-grace',
+        category: 'surprise',
+        title: 'Amazing Grace',
+        type: 'Slow Air',
+        abc: `X:1
+T:Amazing Grace
+M:3/4
+L:1/8
+Q:80
+K:HP
+{g}Ad{gdG}d4|
+{g}fe/2d/2{gfg}f4|
+{g}fe{Gdc}d4|
+{g}B2{G}A4|
+{g}Ad{gdG}d4|
+{g}fe/2d/2{gfg}f4|
+{g}ef{ag}a4|
+{g}a2{g}a4|]
+fa{g}a4|
+fe/2d/2{gfg}f4|
+{g}fe{Gdc}d4|
+{g}B2{G}A4|
+{g}Ad{gdG}d4|
+{g}fe/2d/2{gfg}f4|
+e2{Gdc}d4|
+-{c}d2{gdG}d4|]`,
+        lyrics: [
+          { label: 'Verse 1', lines: [
+            'Amazing grace, how sweet the sound',
+            'That saved a wretch like me',
+            'I once was lost, but now am found',
+            'Was blind, but now I see'
+          ]},
+          { label: 'Verse 2', lines: [
+            "'Twas grace that taught my heart to fear",
+            'And grace my fears relieved',
+            'How precious did that grace appear',
+            'The hour I first believed'
+          ]},
+          { label: 'Verse 3', lines: [
+            'Through many dangers, toils and snares',
+            'I have already come',
+            "'Tis grace hath brought me safe thus far",
+            'And grace will lead me home'
+          ]}
+        ]
+      },
+      {
+        id: 'when-the-battles-oer',
+        category: 'classic',
+        title: "When the Battle's O'er",
+        type: 'March',
+        cadence: '3-4',
+        abc: `X:1
+T:When the Battle's O'er
+M:3/4
+L:1/8
+Q:80
+K:HP
+|: {g}c3/2B/2{g}A2{gfg}f2 |
+{gde}dc{gef}e2{g}c2 |
+{g}c3/2B/2{g}A2{g}c3/2e/2 |
+{g}dc{Gdc}d4 |
+{g}c3/2B/2{g}A2{gfg}f2 |
+{gde}dc{gef}e2{g}c2 |
+{g}c3/2B/2{g}A2{g}c3/2e/2 |
+{g}d3/2e/2{g}c4 :: \
+{g}c3/2e/2{g}d2c2 |
+{gfg}f3/2e/2{g}d2c2 |
+{g}c3/2B/2{g}A2{g}c3/2e/2 |
+{g}dc{Gdc}d4 |
+{g}c3/2e/2{g}d2c2 |
+{gfg}f3/2e/2{g}d2c2 |
+{g}c3/2B/2{g}A2{g}c3/2e/2 |
+{g}d3/2e/2{g}c4 :|`
+      },
+      {
+        id: 'highland-laddie',
+        category: 'classic',
+        title: 'Highland Laddie',
+        type: 'March',
+        cadence: '2-4',
+        abc: `X:1
+T:Highland Laddie
+M:C|
+L:1/8
+Q:80
+C:March
+K:HP
+A/2B/2 |
+{Gdc}d3/2e/2{g}fa |
+g3/4f/4{g}e3/4d/4{g}f2 |
+{gfg}fe{G}e{g}d/4e3/4 |
+{g}fe{G}e{g}d/4B3/4 |
+{Gdc}d3/2e/2{g}fa |
+g3/4f/4{g}e3/4d/4{g}f{g}e/4f3/4 |
+{Gdc}dB{gBd}B{d}A/2B/2 |
+{Gdc}dB{gBd}B|]
+{gf}g |
+{ag}ag/4f3/4{gf}gf/4e3/4 |
+{g}f3/4e/4{g}d3/4e/4{g}f2 |
+{gfg}fe{G}e{g}d/4e3/4 |
+{g}fe{G}e{gf}g |
+{ag}ag/4f3/4{gf}gf/4e3/4 |
+{g}f3/4e/4{g}d3/4e/4{g}f{g}e/4f3/4 |
+{Gdc}dB{gBd}B{d}A/2B/2 |
+{Gdc}dB{gBd}B|]`
+      },
+      {
+        id: 'skye-boat-song',
+        category: 'classic',
+        title: 'The Skye Boat Song',
+        type: 'Slow March',
+        abc: `X:1
+T:The Skye Boat Song
+M:6/8
+L:1/8
+Q:80
+C:Trad.
+S:Slow March
+K:HP
+|: | {g}A3/2{d}B/2{e}A{Gdc}d3/2c/2d |
+{g}e3/2f/2{g}e{ag}a3 |
+{fg}f3/2{g}e/2f{g}B2{GdGe}B |
+{g}A3{GAG}A3 :| | \
+{g}f{g}d/2f{gfg}f3 |
+{gef}e3/2{g}c/2e{gef}e2 |
+{Gdc}d{g}B/2d{gdc}d2c |
+{g}B3{GdGe}B3/2 | \
+{g}f{g}d/2c{gfg}f3 |
+{gef}e3/2{g}B/2e{gef}e3 |
+{Gdc}d3/2B/2c{Gdc}d2c |
+{g}B3{GdGe}B3|]`,
+        lyrics: [
+          { label: 'Verse 1', lines: [
+            'Speed, bonnie boat, like a bird on the wing',
+            'Onward! the sailors cry',
+            "Carry the lad that's born to be King",
+            'Over the sea to Skye'
+          ]},
+          { label: 'Chorus', chorus: true, lines: [
+            'Loud the winds howl, loud the waves roar',
+            'Thunderclouds rend the air',
+            "Baffled, our foes stand by the shore",
+            "Carry the lad who's born to be King",
+            'Over the sea to Skye'
+          ]}
+        ]
+      },
+      {
+        id: 'green-hills-of-tyrol',
+        category: 'classic',
+        title: 'Green Hills of Tyrol',
+        type: 'March',
+        cadence: '3-4',
+        abc: `X:1
+T:Green Hills of Tyrol
+M:3/4
+L:1/8
+Q:80
+C:Traditional
+S:March
+K:HP
+|: {g}A3/2B/2{GdG}c2{gcd}c{e}A|
+{g}c{Gdc}d{gef}e2{A}ef|
+{gcd}cf{gef}e3/2c/2{g}B2|
+{GdGe}Bf{gef}e3/2c/2{G}A2|
+{g}A3/2B/2{GdG}c2{gcd}c{e}A|
+{g}c{Gdc}d{gef}e2{A}ef|
+{gcd}cf{gef}e3/2c/2{g}B2|
+{GdGe}B{G}A{gcd}c2{GBG}A2:| |:
+{gcd}ce{ag}a2{g}a2|
+{f}gf{gfg}fe{A}e2|
+{g}e3/2f/2{gef}ed{gdG}e2|
+{g}d3/2e/2{gde}dc{GdG}c2|
+{gcd}ce{ag}a2{g}a2|
+{f}gf{gfg}fe{A}e2|
+{g}e3/2f/2{gef}e2{A}e3/2d/2|
+{g}c{Gdc}d{gef}e2{A}e2:|`
+      },
+      {
+        id: 'flower-of-scotland',
+        category: 'classic',
+        title: 'Flower of Scotland',
+        type: 'Slow Air',
+        abc: `X:1
+T:Flower of Scotland
+M:6/8
+L:1/8
+Q:80
+C:Trad.
+S:Slow Air
+K:HP
+|: A|
+{g}f2e{Gdc}d3|
+{g}A3-A2{g}A|
+{Gdc}d2f{gef}e3-|
+-e2f/2e/2{Gdc}d2e|
+{g}f3-f2{g}f|
+{gf}gfg{ag}a3|
+{Gdc}d3-d2{g}A|
+{g}e2{A}e{g}ede|
+{g}f2g{fg}f2e|
+{Gdc}d3{g}A3-|
+A2f{gf}gfg|
+{ag}a3{Gdc}d3-|
+d2f{gf}gfe|
+{g}f2e{Gdc}d3-|
+d2{g}d{g}c2e|
+{Gdc}d3-d3-|
+d2:| |
+{g}d|
+{g}c3-c3-|
+c3e3|
+{Gdc}d6|]`,
+        lyrics: [
+          { label: 'Chorus', chorus: true, lines: [
+            'O Flower of Scotland',
+            'When will we see your like again',
+            'That fought and died for',
+            'Your wee bit hill and glen',
+            'And stood against him',
+            "Proud Edward's army",
+            'And sent him homeward',
+            'Tae think again'
+          ]},
+          { label: 'Verse', lines: [
+            'The hills are bare now',
+            'And autumn leaves lie thick and still',
+            "O'er land that is lost now",
+            'Which those so dearly held',
+            'And stood against him',
+            "Proud Edward's army",
+            'And sent him homeward',
+            'Tae think again'
+          ]}
+        ]
+      },
+      {
+        id: 'mist-covered-mountains',
+        category: 'classic',
+        title: 'The Mist Covered Mountains',
+        type: 'Slow March',
+        abc: `X:1
+T:Mist Covered Mountains
+M:6/8
+L:1/8
+Q:80
+C:Trad.
+S:Slow March
+K:HP
+|: {g}B3{GdGe}B3 | \
+{g}f2{GdG}f{gfg}f3/2e/2c | \
+{g}A3{GAG}A3 |
+{gcd}c3/2{g}B/2{d}c{gBd}B3/2{G}A/2B | \
+{Gdc}d3{gef}e3 | \
+{g}f3/2g/2a{cd}c3/2{g}B/2{d}A |
+{g}B3/2{d}c/2f{gef}e3/2d/2c | \
+{g}B3{GdGe}B3 :| \
+{g}f3{GdG}f3 |
+{gef}e3/2f/2a{fg}f3/2e/2c | \
+{g}A2{GdGe}A{gef}e2c | \
+{g}f2{GdG}f{gef}e3/2d/2c |
+{g}B3{Gdc}d3 | \
+{gef}e3/2f/2a{cd}c3/2{g}B/2{d}A | \
+{g}B3/2{d}c/2f{gef}e3/2d/2c |
+{g}B3{GdGe}B3 :|`
+      },
+      {
+        id: 'rowan-tree',
+        category: 'classic',
+        title: 'The Rowan Tree',
+        type: 'March',
+        cadence: '4-4',
+        abc: `X:1
+T:THE ROWAN TREE
+M:C
+L:1/8
+Q:80
+C:Traditional
+S:March
+K:HP
+[| e2 | \
+{g}c3{GdG}c{gcd}c2{e}B2 | \
+{g}ce3{A}e2a2 |
+{fg}f3e{g}f2a2 | \
+{fg}f2{g}e2{A}e2{g}A3/2B/2 | \
+{g}c3{GdG}c{gcd}c2{e}B2 |
+{g}ce3{g}f3e | \
+{g}ec3{g}B3{d}c | \
+{g}A4{GAG}A2|]
+{g}e2[ | \
+{A}e2a2{g}a3g | \
+{f}g2f2{gfg}f2a2 |
+{ef}e3f{g}fe{g}dc | \
+{gcd}c3B{GdG}B2{g}A3/2B/2{g}c3{GdG}c{gcd}c2{e}B2 | \
+{g}ce3{g}f3e |
+{g}ec3{g}B3{d}c | \
+{g}A4{GAG}A2|]`
+      },
+      {
+        id: 'bonnie-dundee',
+        category: 'classic',
+        title: 'Bonnie Dundee',
+        type: 'March',
+        cadence: '6-8',
+        abc: `X:1
+T:Bonnie Dundee
+M:6/8
+L:1/8
+Q:80
+C:Trad.
+S:March
+K:HP
+|: {g}c/4d3/4 | \
+{g}e3{GdG}e{gef}e3/2c/2e | \
+a3/2g/2f{gef}e2d |
+{g}c/2e3/2A{g}c/2e3/2c | \
+{g}B2{GdGe}B{gBd}B3/2{g}c/2d | \
+{g}e3{GdG}e{gef}e3/2c/2e |
+a3/2g/2f{gef}e2d | \
+{g}c/2e3/2A{g}c/2e3/2c | \
+{g}A2{GdGe}A|1 {GAG}A:|2
+{GAG}A2|]  |: \
+G | \
+{g}A2{GdGe}A{Gdc}d2c | \
+{g}B2{GdGe}B{gBd}B3 |
+{g}B2{GdGe}B{g}B3/2c/2d | \
+{g}c2{GdGe}c{gcd}c2{e}A | \
+{gcd}c3/2{e}B/2{d}c{Gdc}d3/2{g}c/2d |
+{g}e2{GdG}e{gfg}f3/2e/2d | \
+{g}c/2e3/2A{g}c/2e3/2c | \
+{g}A2{GdGe}A{GAG}A :|`
+      },
+      {
+        id: 'brown-haired-maiden',
+        category: 'classic',
+        title: 'The Brown Haired Maiden',
+        type: 'March',
+        cadence: '2-4',
+        abc: `X:1
+T:THE BROWN HAIRED MAIDEN
+M:C|
+L:1/8
+Q:80
+C:Traditional
+S:March
+K:HP
+|: A|
+{Gdc}d3/2c/2{g}B{G}A|
+{Gdc}d2{e}A3/2{Gdc}d/2|
+{g}fd{gf}gf|
+{g}fe{A}e{gf}g|
+f/2a3/2{fg}fa|
+A2{Gdc}d3/2e/2|
+{g}f2{gf}ge|
+{Gdc}d2{gdc}d:| [|
+{gf}g|
+f/2a3/2{fg}fa|
+A2{Gdc}d3/2e/2|
+{g}fd{gf}gf|
+{g}fe{A}e{gf}g|
+f/2a3/2{fg}fa|
+A2{Gdc}d3/2e/2|
+{g}f2{gf}ge|
+{Gdc}d2{gdc}d{gf}g|
+f/2a3/2{fg}fa|
+A2{Gdc}d3/2e/2|
+{g}fd{gf}gf|
+{g}fe{A}e{gf}g|
+a3/2g/2{fg}fa|
+A2{Gdc}d3/2e/2|
+{g}f2{gf}ge|
+{Gdc}d2{gdc}d|]`
+      },
+      {
+        id: 'mairis-wedding',
+        category: 'classic',
+        title: "Mairi's Wedding",
+        type: 'March',
+        cadence: '4-4',
+        abc: `X:1
+T:Mairi's Wedding
+M:4/4
+L:1/8
+Q:80
+C:Trad.
+S:March
+K:Dmix
+|: D>D DE | GA B2 | AG EG | BA Bd |
+D>D DE | GA B2 | AG EG | D2 D2 :|
+|: d>d de | dc B2 | AG EG | BA Bd |
+d>d de | dc B2 | AG EG | D2 D2 :|`,
+        lyrics: [
+          { label: 'Verse', lines: [
+            'Step we gaily, on we go',
+            'Heel for heel and toe for toe',
+            'Arm in arm and row on row',
+            "All for Mairi's wedding"
+          ]},
+          { label: 'Chorus', chorus: true, lines: [
+            'Over hillways up and down',
+            'Myrtle green and bracken brown',
+            'Past the sheiling, through the town',
+            'All for sake of Mairi'
+          ]}
+        ]
+      },
+      {
+        id: 'minstrel-boy',
+        category: 'classic',
+        title: 'The Minstrel Boy',
+        type: 'Slow Air',
+        cadence: '4-4',
+        abc: `X:1
+T:THE MINSTREL BOY
+M:C
+L:1/8
+Q:80
+C:Trad.
+S:Slow Air
+K:HP
+e|
+{g}A3B{g}dc{g}B{G}A|
+{g}c2{g}e2{ag}a2ga|
+{fg}f2e2{g}c3/2d/2{g}ec|
+{g}B4{G}A4:|
+{g}ce|
+{ag}a2g2{fg}f2ga|
+{f}g2f2{gef}e3{A}e|
+{g}f3c{GdG}c2e2|
+{g}f3/2e/2{g}fga2{g}a2|
+{AGAG}A3B{g}dc{g}B{G}A|
+{g}c2{g}e2{ag}a2ga|
+{fg}f2e2{g}c3/2d/2{g}ec|
+{g}B4{G}A4|`,
+        lyrics: [
+          { label: 'Verse 1', lines: [
+            'The minstrel boy to the war is gone',
+            "In the ranks of death you'll find him",
+            "His father's sword he has girded on",
+            'And his wild harp slung behind him'
+          ]},
+          { label: 'Verse 2', lines: [
+            'Land of song! said the warrior bard',
+            'Though all the world betrays thee',
+            'One sword at least thy rights shall guard',
+            'One faithful harp shall praise thee'
+          ]}
+        ]
+      },
+      {
+        id: 'will-ye-no-come-back',
+        category: 'classic',
+        title: 'Will Ye No Come Back Again',
+        type: 'Slow Air',
+        cadence: '4-4',
+        abc: `X:1
+T:WILL YE NO COME BACK AGAIN
+M:C|
+L:1/8
+Q:80
+C:Traditional
+S:Slow Air
+K:HP
+|: {g}f/2e/2 | \
+{Gdc}d3/2e/2{g}fd | \
+{g}B/2d3/2{g}A2 |
+a2{GdG}af | \
+{gfg}fe{A}e{g}f/2e/2 | \
+{Gdc}d3/2e/2{g}fd |
+{g}B/2d3/2{g}A2 | \
+a2{GdG}af | \
+{gef}ed{gdc}d ::
+g | \
+{fg}fa{g}a3/2g/2 | \
+{fg}fa{g}aA | \
+{Gdc}d3/2c/2{gBd}B{G}A |
+{GdG}e2{A}e{g}f/2e/2 | \
+{Gdc}d3/2e/2{g}fd | \
+{g}B/2d3/2{g}A2 |
+a2{GdG}af | \
+{gef}ed{gdc}d :|`,
+        lyrics: [
+          { label: 'Verse', lines: [
+            "Bonnie Charlie's now awa'",
+            'Safely ower the friendly main',
+            "Mony a heart will break in twa'",
+            'If he ne\'er come back again'
+          ]},
+          { label: 'Chorus', chorus: true, lines: [
+            'Will ye no come back again?',
+            'Will ye no come back again?',
+            'Better lo\'ed ye canna be',
+            'Will ye no come back again?'
+          ]}
+        ]
+      },
+      {
+        id: 'highland-cathedral',
+        category: 'surprise',
+        title: 'Highland Cathedral',
+        type: 'Slow March',
+        cadence: '4-4',
+        abc: `X:1
+T:Highland Cathedral
+M:C
+L:1/8
+Q:80
+C:Korb & Roever
+S:March
+K:HP
+|: | {Gdc}d2-de/2f/2{gef}ed{g}Ad | \
+{gef}e2-ef{e}f4 | \
+{g}f2-fg/2a/2{f}gf{a}ed |
+{gef}e2-ef{AGAG}A4 | \
+{GdG}B2-Bc/2d/2{c}d{e}A{g}cd | \
+{ag}a2-ag{a}f4 |
+{gef}e2ef/2g/2{afg}fd{g}Ad | \
+{gef}e2-ed{gdc}d4 :: \
+{gcd}c2-c{g}A{gef}e2-ec/2e/2 |
+{gfg}f2-fc{GdG}c2-cB | \
+{G}A2-A/2B/2c{gBd}B4 | \
+{gcd}c2-c/2d/2e{gBd}B4 |
+{gcd}c2-c{e}A{gef}e2-ec/2e/2 | \
+{gfg}f2-fc{GdG}c2-cB | \
+{G}A2-A/2B/2c{gBd}B2-B{G}A |
+{gAGAG}A6- | \
+A6 :|`
+      },
+      {
+        id: 'auld-lang-syne',
+        category: 'surprise',
+        title: 'Auld Lang Syne',
+        type: 'Slow Air',
+        abc: `X:1
+T:AULD LANG SYNE
+M:C
+L:1/8
+Q:80
+C:Traditional
+S:Hymn
+K:HP
+|: e | \
+{g}A2-A{GAG}A{g}A2{d}c2 | \
+{gBd}B2-B{e}A{GdG}B2{gcd}c3/2B/2 | \
+{g}A2-A{GAG}A{gcd}c2e2 |
+{gfg}f2-f2{e}f2{g}f2 | \
+{gef}e2-ec{gcd}c2{e}A2 | \
+{gBd}B2-B{e}A{GdG}B2{gcd}c3/2B/2 |
+{g}A2-Af{gfg}f2e2 | \
+{g}A2-A2{GAG}A2 :: \
+a |
+{ef}e2-ec{gcd}c2{e}A2 | \
+{gBd}B2-B{e}A{GdG}B2a2 | \
+{ef}e2-ec{gcd}c2e2 |
+{gfg}f2-f2{e}f2{g}f2 | \
+{gef}e2-ec{gcd}c2{e}A2 | \
+{gBd}B2-B{e}A{GdG}B2{gcd}c3/2B/2 |
+{g}A2-Af{gfg}f2e2 | \
+{g}A2-A2{GAG}A2 :|`,
+        lyrics: [
+          { label: 'Verse 1', lines: [
+            'Should auld acquaintance be forgot',
+            'And never brought to mind?',
+            'Should auld acquaintance be forgot',
+            'And days of auld lang syne?'
+          ]},
+          { label: 'Chorus', chorus: true, lines: [
+            'For auld lang syne, my jo',
+            'For auld lang syne',
+            "We'll tak a cup o' kindness yet",
+            'For auld lang syne'
+          ]}
+        ]
+      },
+      {
+        id: 'loch-lomond',
+        category: 'surprise',
+        title: 'Loch Lomond',
+        type: 'Slow Air',
+        abc: `X:1
+T:Loch Lomond
+M:C
+L:1/8
+Q:80
+C:Trad.
+S:Slow Air
+K:HP
+{g}AB |
+{g}{Gdc}d2{g}def2{g}f2 |
+e/2d3/2{c}d3/2B/2A2{GAG}A2 |
+Bd2{g}de/2d3 |
+f/2a3/2B3A3|] |
+{g}A/2B3/2{GdG}B3/2A/2f2{g}f/2a3/2 |
+gfe3/2d/2B2AB |
+f/2a3/2B2A2f2 |
+-f2ed2-d3|]`,
+        lyrics: [
+          { label: 'Verse 1', lines: [
+            'By yon bonnie banks and by yon bonnie braes',
+            'Where the sun shines bright on Loch Lomond',
+            'Where me and my true love were ever wont tae gae',
+            'On the bonnie, bonnie banks o\' Loch Lomond'
+          ]},
+          { label: 'Chorus', chorus: true, lines: [
+            "O ye'll tak' the high road and I'll tak' the low road",
+            "And I'll be in Scotland afore ye",
+            'For me and my true love will never meet again',
+            "On the bonnie, bonnie banks o' Loch Lomond"
+          ]}
+        ]
+      },
+      {
+        id: 'wings',
+        category: 'surprise',
+        title: 'Wings',
+        type: 'March',
+        cadence: '4-4',
+        abc: `X:1
+T:Wings
+M:C
+L:1/8
+Q:80
+C:Paul McCartney
+S:March
+K:HP
+[| e | \
+{g}A2{GdGe}A3/2B/2{GdG}c2-ce | \
+{g}f3/2e/2{g}fa{ef}e2{gcd}ce | \
+{g}f3/2g/2af{g}e/2c3/2{gBd}B{G}A |
+{g}B3/2c/2{Gdc}dc{gBd}Be{gde}dB | \
+{g}A2{GdGe}A3/2B/2{GdG}c2-ce | \
+{g}f3/2e/2{g}fa{ef}e2{gcd}ce |
+{g}f3/2g/2af{g}e/2c3/2{g}B3/2{d}c/2 | \
+{G}A4{GAG}A2-Ae|] [ | \
+{ag}a2{g}a2{GdG}ag{fg}fe |
+{g}f3/2e/2{g}fa{fg}fe{gcd}ce | \
+{g}f3/2g/2af{g}e/2c3/2{gBd}B{G}A | \
+{g}B3/2c/2{Gdc}dc{gBd}Be{gde}dB |
+{g}A2{GdGe}A3/2B/2{GdG}c2-ce | \
+{g}f3/2e/2{g}fa{ef}e2{gcd}ce | \
+{g}f3/2g/2af{g}e/2c3/2{g}B3/2{d}c/2 |
+{G}A4{GAG}A3|]`
+      },
+      {
+        id: 'barren-rocks-of-aden',
+        category: 'surprise',
+        title: 'Barren Rocks of Aden',
+        type: 'Slow Air',
+        abc: `X:1
+T:The Barren Rocks of Aden
+M:C|
+L:1/8
+Q:80
+C:Trad.
+S:Slow Air
+K:HP
+|: e | \
+{g}f3/2g/2{fg}f3/2e/2 | \
+{Gdc}d{g}f{AGAG}A{Gdc}d | \
+{gcd}ce{gAGAG}A3/2e/2 |
+{g}f{AGAG}A{Gdc}d3/2e/2 | \
+{g}f3/2g/2{fg}f3/2e/2 | \
+{Gdc}d{g}f{AGAG}A{Gdc}d |
+{gcd}ce{gAGAG}A{g}f3/4e/4 | \
+{Gdc}d2{gdc}d :: \
+{g}f3/4g/4 |
+{ag}a3/2f/2{Gdc}d3/2f/2 | \
+{gef}e{g}f{AGAG}A{g}e3/4f/4 | \
+{gf}g3/2e/2{gcd}ce |
+{Gdc}d{g}f{AGAG}A{g}f3/4g/4 | \
+{ag}a3/2f/2{Gdc}d3/2f/2 | \
+{gef}e{g}f{AGAG}A{g}e3/4f/4 |
+{gf}ge{gcd}c{e}A | \
+{Gdc}d2{gdc}d :|`
+      }
+    ];
+
+    const SECTIONS = [
+      { key: 'classic', label: 'On the wall' },
+      { key: 'surprise', label: 'Surprises' }
+    ];
+
+    const CADENCE_LABELS = {
+      '2-4': '2/4',
+      '3-4': '3/4',
+      '4-4': '4/4',
+      '6-8': '6/8'
+    };
+
+    const sectionsEl = document.getElementById('tune-sections');
+    const fitInnerEl = document.getElementById('fit-inner');
+    const sheetEl = document.getElementById('sheet');
+    const scrollEl = document.querySelector('.scroll');
+    const tuneNameEl = document.getElementById('tune-name');
+    const partTagEl = document.getElementById('part-tag');
+    const partSnareBtn = document.getElementById('part-snare');
+    const partVoiceBtn = document.getElementById('part-voice');
+    const zoomPctEl = document.getElementById('zoom-pct');
+    const partsEl = document.getElementById('parts');
+
+    let active = null;
+    let part = 'pipes';
+    let zoom = 1;
+
+    function fitSnareLayout() {
+      const wrap = fitInnerEl.querySelector('.cadence-wrap');
+      const scoreBox = fitInnerEl.querySelector('.cadence-score');
+      const cadenceImg = fitInnerEl.querySelector('.cadence-score img');
+      const brandBox = fitInnerEl.querySelector('.cadence-brand');
+      const brandImg = fitInnerEl.querySelector('.cadence-brand img');
+      const foot = fitInnerEl.querySelector('.cadence-foot');
+      if (!wrap || !scoreBox || !cadenceImg) return;
+
+      const availH = scrollEl.clientHeight - 8;
+      const footH = 14;
+      const brandH = Math.min(Math.round(availH * 0.18), 170);
+      const cadenceH = availH - footH - brandH - 10;
+
+      fitInnerEl.style.height = `${availH}px`;
+      wrap.style.height = `${availH}px`;
+
+      scoreBox.style.height = `${cadenceH}px`;
+      scoreBox.style.flex = 'none';
+
+      cadenceImg.style.maxHeight = '100%';
+      cadenceImg.style.maxWidth = '100%';
+      cadenceImg.style.width = 'auto';
+      cadenceImg.style.height = 'auto';
+
+      if (foot) foot.style.flex = 'none';
+      if (brandBox) {
+        brandBox.style.height = `${brandH}px`;
+        brandBox.style.flex = 'none';
+        brandBox.style.display = 'flex';
+        brandBox.style.alignItems = 'center';
+        brandBox.style.justifyContent = 'center';
+      }
+      if (brandImg) {
+        brandImg.style.maxHeight = '100%';
+        brandImg.style.maxWidth = '100%';
+        brandImg.style.width = 'auto';
+      }
+
+      zoomPctEl.textContent = 'Fit';
+    }
+
+    function applyVoiceSizes(wrap, fontSize, lineHeight) {
+      const lines = wrap.querySelectorAll('.lyrics-line');
+      const labels = wrap.querySelectorAll('.lyrics-label');
+      const chorusBoost = Math.min(fontSize * 1.1, fontSize + 6);
+
+      lines.forEach((line) => {
+        const size = line.closest('.lyrics-chorus') ? chorusBoost : fontSize;
+        line.style.fontSize = `${size}px`;
+        line.style.lineHeight = String(lineHeight);
+      });
+
+      labels.forEach((label) => {
+        label.style.fontSize = `${Math.max(11, Math.round(fontSize * 0.4))}px`;
+      });
+    }
+
+    function fitVoiceLayout() {
+      const wrap = fitInnerEl.querySelector('.lyrics-wrap');
+      if (!wrap) return;
+
+      fitInnerEl.style.transform = 'none';
+      fitInnerEl.style.marginBottom = '0';
+
+      const availH = scrollEl.clientHeight - 10;
+      fitInnerEl.style.height = `${availH}px`;
+      wrap.style.height = 'auto';
+      wrap.style.maxHeight = `${availH}px`;
+      wrap.style.overflow = 'hidden';
+
+      const lines = wrap.querySelectorAll('.lyrics-line');
+      if (!lines.length) return;
+
+      const lineCount = lines.length;
+      const lineHeight = 1.28;
+      let fontSize = Math.min(Math.max((availH - 40) / (lineCount * lineHeight), 20), 52);
+
+      applyVoiceSizes(wrap, fontSize, lineHeight);
+
+      for (let i = 0; i < 50 && wrap.scrollHeight > availH; i += 1) {
+        fontSize -= 1;
+        if (fontSize < 17) break;
+        applyVoiceSizes(wrap, fontSize, lineHeight);
+      }
+
+      zoomPctEl.textContent = 'Fit';
+    }
+
+    function fitToPage() {
+      if (!fitInnerEl || !fitInnerEl.firstElementChild) return;
+
+      fitInnerEl.style.transform = 'none';
+      fitInnerEl.style.marginBottom = '0';
+      fitInnerEl.style.height = '';
+
+      const snareView = document.body.classList.contains('mode-snare');
+      const voiceView = document.body.classList.contains('mode-voice');
+
+      if (snareView) {
+        fitSnareLayout();
+        return;
+      }
+
+      if (voiceView) {
+        fitVoiceLayout();
+        return;
+      }
+
+      const availH = scrollEl.clientHeight - 6;
+      const availW = sheetEl.clientWidth - 6;
+      const contentH = fitInnerEl.offsetHeight;
+      const contentW = fitInnerEl.offsetWidth;
+      if (!contentH || !contentW || !availH || !availW) return;
+
+      const auto = Math.min(availH / contentH, availW / contentW);
+      const scale = Math.min(Math.max(auto * zoom, 0.25), 2.5);
+
+      fitInnerEl.style.transform = `scale(${scale})`;
+      fitInnerEl.style.marginBottom = `${contentH * (scale - 1)}px`;
+      zoomPctEl.textContent = Math.round(scale * 100) + '%';
+    }
+
+    function afterRender() {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(fitToPage);
+      });
+    }
+
+    SECTIONS.forEach(({ key, label }) => {
+      const groupTunes = TUNES.filter((t) => t.category === key);
+      if (!groupTunes.length) return;
+
+      const heading = document.createElement('div');
+      heading.className = 'tune-heading';
+      heading.textContent = label;
+      sectionsEl.appendChild(heading);
+
+      const list = document.createElement('ul');
+      list.className = 'tunes';
+
+      groupTunes.forEach((tune) => {
+        const li = document.createElement('li');
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.dataset.id = tune.id;
+        btn.innerHTML = `${tune.title}<small>${tune.type}</small>`;
+        btn.addEventListener('click', () => hang(tune.id));
+        li.appendChild(btn);
+        list.appendChild(li);
+      });
+
+      sectionsEl.appendChild(list);
+    });
+
+    function renderLyrics(tune) {
+      const wrap = document.createElement('div');
+      wrap.className = 'lyrics-wrap';
+
+      tune.lyrics.forEach((section) => {
+        const sec = document.createElement('div');
+        sec.className = 'lyrics-section' + (section.chorus ? ' lyrics-chorus' : '');
+
+        if (section.label) {
+          const label = document.createElement('p');
+          label.className = 'lyrics-label';
+          label.textContent = section.label;
+          sec.appendChild(label);
+        }
+
+        section.lines.forEach((line) => {
+          const p = document.createElement('p');
+          p.className = 'lyrics-line';
+          p.textContent = line;
+          sec.appendChild(p);
+        });
+
+        wrap.appendChild(sec);
+      });
+
+      fitInnerEl.appendChild(wrap);
+      afterRender();
+    }
+
+    function setViewMode(tune) {
+      const snareView = part === 'snare' && tune?.cadence;
+      const voiceView = part === 'voice' && tune?.lyrics;
+      const pipesView = !snareView && !voiceView;
+
+      document.body.classList.toggle('mode-snare', snareView);
+      document.body.classList.toggle('mode-voice', voiceView);
+      document.body.classList.toggle('mode-pipes', pipesView);
+
+      sheetEl.classList.toggle('sheet-snare', snareView);
+      sheetEl.classList.toggle('sheet-voice', voiceView);
+      sheetEl.classList.toggle('sheet-pipes', pipesView);
+
+      if (partTagEl) {
+        if (voiceView) partTagEl.textContent = 'Voice';
+        else if (snareView) {
+          partTagEl.textContent = `Snare · ${CADENCE_LABELS[tune.cadence] || tune.cadence}`;
+        } else partTagEl.textContent = '';
+      }
+    }
+
+    function updateParts(tune) {
+      const hasCadence = Boolean(tune.cadence);
+      const hasLyrics = Boolean(tune.lyrics);
+
+      partsEl.classList.toggle('visible', hasCadence || hasLyrics);
+      partSnareBtn.classList.toggle('hidden', !hasCadence);
+      partVoiceBtn.classList.toggle('hidden', !hasLyrics);
+
+      if (part === 'snare' && !hasCadence) part = 'pipes';
+      if (part === 'voice' && !hasLyrics) part = 'pipes';
+
+      partsEl.querySelectorAll('button').forEach((b) => {
+        b.classList.toggle('active', b.dataset.part === part);
+      });
+      setViewMode(tune);
+    }
+
+    function showHome() {
+      document.body.classList.add('view-home');
+      document.body.classList.remove('view-play');
+      active = null;
+      tuneNameEl.textContent = 'Choose a tune';
+      if (partTagEl) partTagEl.textContent = '';
+      document.querySelectorAll('.tunes button').forEach((b) => {
+        b.classList.remove('active');
+      });
+    }
+
+    function showPlay() {
+      document.body.classList.remove('view-home');
+      document.body.classList.add('view-play');
+    }
+
+    function hang(id) {
+      const tune = TUNES.find((t) => t.id === id);
+      if (!tune) return;
+
+      showPlay();
+      active = id;
+      tuneNameEl.textContent = tune.title;
+      updateParts(tune);
+
+      document.querySelectorAll('.tunes button').forEach((b) => {
+        b.classList.toggle('active', b.dataset.id === id);
+      });
+
+      fitInnerEl.innerHTML = '';
+      zoom = 1;
+
+      if (part === 'voice' && tune.lyrics) {
+        renderLyrics(tune);
+      } else if (part === 'snare' && tune.cadence) {
+        const label = CADENCE_LABELS[tune.cadence] || tune.cadence;
+        const wrap = document.createElement('div');
+        wrap.className = 'cadence-wrap';
+        wrap.innerHTML = `
+          <div class="cadence-score">
+            <img src="cadence-images/cadence-${tune.cadence}.png" alt="${label} massed band snare cadence">
+          </div>
+          <p class="cadence-foot">Massed band snare · ${label} · ANAPBA cadence</p>
+          <div class="cadence-brand">
+            <img src="boise-highlanders-logo.png" alt="Boise Highlanders">
+          </div>`;
+        fitInnerEl.appendChild(wrap);
+        const imgs = wrap.querySelectorAll('img');
+        let pending = imgs.length;
+        const done = () => {
+          pending -= 1;
+          if (pending <= 0) afterRender();
+        };
+        imgs.forEach((img) => {
+          if (img.complete) done();
+          else {
+            img.addEventListener('load', done);
+            img.addEventListener('error', done);
+          }
+        });
+        if (!imgs.length) afterRender();
+      } else {
+        const staffwidth = Math.max(480, sheetEl.clientWidth - 40);
+        const measuresPerLine = tune.abc.length > 900 ? 5 : 4;
+
+        ABCJS.renderAbc(fitInnerEl, tune.abc.trim(), {
+          responsive: 'resize',
+          scale: 1.05,
+          staffwidth,
+          selectTypes: false,
+          paddingtop: 6,
+          paddingbottom: 10,
+          paddingleft: 8,
+          paddingright: 8,
+          wrap: {
+            preferredMeasuresPerLine: measuresPerLine,
+            minSpacing: 1.5,
+            maxSpacing: 2.2,
+            lastLineLimit: measuresPerLine
+          }
+        });
+        afterRender();
+      }
+    }
+
+    partsEl.querySelectorAll('button').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        part = btn.dataset.part;
+        partsEl.querySelectorAll('button').forEach((b) => {
+          b.classList.toggle('active', b.dataset.part === part);
+        });
+        if (active) hang(active);
+      });
+    });
+
+    function setZoom(v) {
+      if (document.body.classList.contains('mode-snare')
+        || document.body.classList.contains('mode-voice')) return;
+      zoom = Math.min(1.4, Math.max(0.75, v));
+      fitToPage();
+    }
+
+    document.getElementById('zoom-in').addEventListener('click', () => setZoom(zoom + 0.1));
+    document.getElementById('zoom-out').addEventListener('click', () => setZoom(zoom - 0.1));
+    document.getElementById('btn-home').addEventListener('click', showHome);
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        if (active) {
+          const tune = TUNES.find((t) => t.id === active);
+          if (tune && part === 'pipes') hang(active);
+          else fitToPage();
+        }
+      }, 150);
+    });
+
+  </script>
+</body>
+</html>
